@@ -11,6 +11,7 @@ import {
   Image,
 } from "react-native";
 import { Fontisto } from "@expo/vector-icons";
+import "datejs";
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -38,6 +39,8 @@ export default function App() {
   const [forecast, setForecast] = useState([]);
   const [ok, setOk] = useState(true);
 
+  const getDate = () => {};
+
   const getWeather = async () => {
     const { granted } = await Location.requestForegroundPermissionsAsync();
 
@@ -61,8 +64,8 @@ export default function App() {
     const data = await res.json();
     setForecast(data.daily);
 
-    console.log(forecast.length);
-    console.log(forecast[0]);
+    // console.log(forecast.length);
+    // console.log(forecast[0]);
   };
 
   useEffect(() => {
@@ -88,16 +91,30 @@ export default function App() {
           forecast.map((data, index) => {
             const dayTemp = Math.floor(data.temp.day);
 
+            const month = Date.today().addDays(index).toString("MM");
+            const day = Date.today().addDays(index).toString("dd");
+
             return (
               <View key={index} style={styles.day}>
+                <View style={styles.dateBox}>
+                  <Text style={styles.date}>{month}</Text>
+                  <Text style={styles.dateDeco}> ­– </Text>
+                  <Text style={styles.date}>{day}</Text>
+                </View>
                 <View style={styles.tempView}>
                   <Text style={styles.temp}>{dayTemp}</Text>
-                  <Fontisto
-                    style={styles.icon}
-                    name={icons[data.weather[0].main]}
-                    size={75}
-                    color="black"
-                  />
+                  <Text style={styles.tempIcon}>℃</Text>
+                  <View>
+                    <Fontisto
+                      style={styles.icon}
+                      name={icons[data.weather[0].main]}
+                      size={75}
+                      color="black"
+                    />
+                    <Text style={styles.percentage}>
+                      {data.clouds > 20 && data.clouds + " %"}
+                    </Text>
+                  </View>
                 </View>
                 <Text style={styles.weatherText}>{data.weather[0].main}</Text>
                 <Text style={styles.tinyText}>
@@ -125,15 +142,37 @@ const styles = StyleSheet.create({
   },
   cityname: {
     color: "black",
-    fontSize: 50,
+    fontSize: 45,
     fontWeight: 500,
     marginTop: 100,
   },
 
   day: {
-    marginTop: 50,
+    marginTop: 20,
     width: SCREEN_WIDTH,
     paddingLeft: 25,
+  },
+
+  dateBox: {
+    gap: 15,
+    justifyContent: "center",
+    alignItems: "flex-start",
+    paddingLeft: 10,
+    marginBottom: 20,
+  },
+
+  date: {
+    fontSize: 28,
+    marginTop: 0,
+    marginBottom: 0,
+  },
+
+  dateDeco: {
+    fontSize: 20,
+    margin: -20,
+    marginLeft: 7,
+    padding: 0,
+    transform: [{ rotate: "-10deg" }],
   },
 
   tempView: {
@@ -143,13 +182,26 @@ const styles = StyleSheet.create({
     width: "95%",
   },
   temp: {
-    fontSize: 130,
+    fontSize: 115,
     fontWeight: 500,
+    marginBottom: 20,
+  },
+  tempIcon: {
+    fontSize: 60,
+    fontWeight: 500,
+    marginLeft: -50,
+    marginBottom: -10,
   },
   icon: {
-    marginTop: -30,
     paddingBottom: 15,
     paddingRight: 10,
+  },
+
+  percentage: {
+    fontSize: 20,
+    fontWeight: 500,
+    marginTop: -15,
+    marginLeft: 10,
   },
 
   weatherText: {
