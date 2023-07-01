@@ -67,7 +67,7 @@ export default function App() {
             </View>
           ) : (
             forecast.map((data, index) => {
-              const roundedUvi = Math.round(data.uvi);
+              const simpleUvi = Math.floor(data.uvi);
 
               return (
                 <View
@@ -100,27 +100,27 @@ export default function App() {
                       style={{
                         ...styles.uviCircle,
                         backgroundColor:
-                          roundedUvi <= 2
+                          simpleUvi <= 2
                             ? uviOption["2"][1]
-                            : roundedUvi <= 5 && roundedUvi > 3
+                            : simpleUvi <= 5 && simpleUvi > 3
                             ? uviOption["5"][1]
-                            : roundedUvi <= 7 && roundedUvi > 5
+                            : simpleUvi <= 7 && simpleUvi > 5
                             ? uviOption["7"][1]
-                            : roundedUvi <= 10 && roundedUvi > 7
+                            : simpleUvi <= 10 && simpleUvi > 7
                             ? uviOption["10"][1]
                             : uviOption["11"][1],
                       }}
                     ></View>
                     <Text style={styles.uviWarning}>
-                      {roundedUvi <= 2
+                      {simpleUvi <= 2
                         ? uviOption["2"][0]
-                        : roundedUvi <= 5 && roundedUvi > 3
+                        : simpleUvi <= 5 && simpleUvi > 3
                         ? uviOption["5"][0]
-                        : roundedUvi <= 7 && roundedUvi > 5
+                        : simpleUvi <= 7 && simpleUvi > 5
                         ? uviOption["7"][0]
-                        : roundedUvi <= 10 && roundedUvi > 7
+                        : simpleUvi <= 10 && simpleUvi > 7
                         ? uviOption["10"][0]
-                        : roundedUvi >= 11
+                        : simpleUvi >= 11
                         ? uviOption["11"][0]
                         : "--"}
                     </Text>
