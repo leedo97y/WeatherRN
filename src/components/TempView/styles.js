@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   tempView: {
+    flex: 0.5,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -15,11 +16,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   tempIcon: {
-    fontSize: 40,
+    fontSize: 35,
     fontWeight: 500,
     fontFamily: "Unbounded-SemiBold",
-    marginLeft: -50,
-    marginBottom: -20,
+    marginLeft: -37,
+    marginBottom: -40,
   },
   icon: {
     paddingBottom: 25,

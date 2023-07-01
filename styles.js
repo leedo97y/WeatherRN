@@ -5,10 +5,10 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5caeff",
+    backgroundColor: "#f5f5f5",
   },
   city: {
-    flex: 1.5,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -21,22 +21,57 @@ const styles = StyleSheet.create({
   },
 
   day: {
-    marginTop: 30,
+    paddingTop: 30,
     width: SCREEN_WIDTH,
     paddingLeft: 25,
   },
 
   weatherText: {
-    marginTop: -20,
+    marginTop: -10,
     marginLeft: 10,
     fontSize: 25,
     fontFamily: "Unbounded-Regular",
   },
   tinyText: {
-    marginTop: -3,
+    marginTop: -1,
     marginLeft: 10,
     fontSize: 15,
     fontFamily: "Unbounded-Regular",
+  },
+  minMaxTemp: {
+    paddingTop: 30,
+    marginLeft: 10,
+    fontSize: 20,
+    fontFamily: "Unbounded-Medium",
+  },
+  humidity: {
+    marginLeft: 10,
+    paddingTop: 20,
+    fontSize: 16,
+    fontFamily: "Unbounded-Regular",
+  },
+  uvIndex: {
+    flexDirection: "row",
+    alignContent: "center",
+    paddingTop: 20,
+    marginLeft: 10,
+  },
+  uviText: {
+    alignContent: "center",
+    fontSize: 16,
+    fontFamily: "Unbounded-Regular",
+    marginRight: 10,
+  },
+  uviCircle: {
+    width: 18,
+    height: 18,
+    backgroundColor: "#000",
+    borderRadius: "100%",
+  },
+  uviWarning: {
+    fontSize: 16,
+    fontFamily: "Unbounded-Regular",
+    marginLeft: 10,
   },
 });
 

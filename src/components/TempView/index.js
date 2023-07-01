@@ -12,7 +12,7 @@ const TempView = ({ data, weatherOption, isLoaded }) => {
         <View>
           <Fontisto
             style={styles.icon}
-            name={weatherOption[data.weather[0].main]}
+            name={weatherOption[data.weather[0].main][0]}
             size={75}
             color="black"
           />

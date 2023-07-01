@@ -8,25 +8,10 @@ import { useLoadResources } from "./src/hooks/useLoadResource";
 import DateView from "./src/components/DateView";
 import TempView from "./src/components/TempView";
 
+import { weatherOption, uviOption } from "./src/util/optionDatas";
+
 const API_KEY = "c085c85ef7adac74dca0cca6afe4cb80";
 
-const weatherOption = {
-  Clear: "day-sunny",
-  Clouds: "cloudy",
-  Thunderstorm: "lightning",
-  Drizzle: "rain",
-  Rain: "rains",
-  Snow: "snow",
-  Mist: "fog",
-  Smoke: "fog",
-  Haze: "fog",
-  Ash: "fog",
-  Dust: "fog",
-  Sand: "fog",
-  Fog: "fog",
-  Squall: "fog",
-  Tornado: "fog",
-};
 export default function App() {
   const isLoaded = useLoadResources();
   const [city, setCity] = useState("Loading...");
@@ -82,8 +67,16 @@ export default function App() {
             </View>
           ) : (
             forecast.map((data, index) => {
+              const roundedUvi = Math.round(data.uvi);
+
               return (
-                <View key={index} style={styles.day}>
+                <View
+                  key={index}
+                  style={{
+                    ...styles.day,
+                    backgroundColor: weatherOption[data.weather[0].main][1],
+                  }}
+                >
                   <DateView index={index} isLoaded={isLoaded} />
                   <TempView
                     weatherOption={weatherOption}
@@ -94,7 +87,44 @@ export default function App() {
                   <Text style={styles.tinyText}>
                     {data.weather[0].description}
                   </Text>
-                  <Text></Text>
+                  <Text style={styles.minMaxTemp}>
+                    {Math.floor(data.temp.min)}℃ &nbsp; / &nbsp;{" "}
+                    {Math.floor(data.temp.max)}℃
+                  </Text>
+                  <Text style={styles.humidity}>
+                    Humidity &nbsp; {data.humidity}%
+                  </Text>
+                  <View style={styles.uvIndex}>
+                    <Text style={styles.uviText}>UVI &nbsp; {data.uvi}</Text>
+                    <View
+                      style={{
+                        ...styles.uviCircle,
+                        backgroundColor:
+                          roundedUvi <= 2
+                            ? uviOption["2"][1]
+                            : roundedUvi <= 5 && roundedUvi > 3
+                            ? uviOption["5"][1]
+                            : roundedUvi <= 7 && roundedUvi > 5
+                            ? uviOption["7"][1]
+                            : roundedUvi <= 10 && roundedUvi > 7
+                            ? uviOption["10"][1]
+                            : uviOption["11"][1],
+                      }}
+                    ></View>
+                    <Text style={styles.uviWarning}>
+                      {roundedUvi <= 2
+                        ? uviOption["2"][0]
+                        : roundedUvi <= 5 && roundedUvi > 3
+                        ? uviOption["5"][0]
+                        : roundedUvi <= 7 && roundedUvi > 5
+                        ? uviOption["7"][0]
+                        : roundedUvi <= 10 && roundedUvi > 7
+                        ? uviOption["10"][0]
+                        : roundedUvi >= 11
+                        ? uviOption["11"][0]
+                        : "--"}
+                    </Text>
+                  </View>
                 </View>
               );
             })
